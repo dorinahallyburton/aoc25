@@ -4,8 +4,9 @@ import java.io.File;
 import java.io.FileInputStream;
 
 public class Day2 {
+
     public static void main(String[] args) {
-       parse(readInput(new File("day02/input.txt")));
+      parse(readInput(new File("day02/input.txt")));
       
     }
     public  static  String readInput(File input){
@@ -50,19 +51,33 @@ public class Day2 {
 
 
     static boolean isInvalid(long i) {
-      
-       if (Long.toString(i).length() % 2 != 0) {
-            return false;
+        String s = Long.toString(i);
+        String subString = "";
+        //outer loop for substring length
+        //innerloop for substring comparison
+        for(int substringLength = 1; substringLength <= s.length()/2; substringLength++){
+            if(s.length() % substringLength != 0){
+                continue;
+            }
+            subString = s.substring(0, substringLength);
+            for (int indexPointer = 0; indexPointer <= s.length() - substringLength; indexPointer += substringLength) {
+                if (subString.equals(s.substring(indexPointer, indexPointer + substringLength)) ) {
+                    if (indexPointer == s.length()- substringLength ) { 
+                       return true;
+                    }
+                } else {
+                    indexPointer = s.length();
+                }
+                
+            }
+
+                
+            
+
         }
-        else {
-            String s = Long.toString(i);
-            int halfLength = s.length() / 2;
-            String firstHalf = s.substring(0, halfLength);
-            String secondHalf = s.substring(halfLength);
-            
-            return firstHalf.equals(secondHalf);
-            
-        } 
+        return false;
+
+
     }
    
 
